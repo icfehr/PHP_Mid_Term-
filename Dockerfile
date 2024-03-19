@@ -1,8 +1,6 @@
 # Use an official PHP runtime as a parent image
 FROM php:8.2-apache
 
-
-
 # Install required system packages and dependencies
 RUN apt-get update && apt-get install -y \
     libpq-dev \
@@ -14,13 +12,15 @@ WORKDIR /var/www/html
 # Copy the current directory contents into the container at /var/www/html
 COPY . /var/www/html
 
+# Copy the SQL file and entrypoint script into the Docker image
+COPY ./config/quotesdb.sql /docker-entrypoint-initdb.d/quotesdb.sql
+COPY ./docker-entrypoint.sh /usr/local/bin/
+
 # Install any dependencies your PHP application may need
 # For example, if you're using Composer for dependency management:
 # RUN apt-get update && apt-get install -y \
 #     git \
 #     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-#Does the database count as a depentancy????
 
 # If you have specific PHP extensions required, you can install them here.
 # For example, if you need MySQL support:
@@ -35,22 +35,16 @@ COPY apache.conf /etc/apache2/sites-available/000-default.conf
 # Enable Apache modules
 RUN a2enmod rewrite
 
-# Suprisingly, I deployed to Render without this!
 # Set Apache to bind to IP address 0.0.0.0
-# RUN echo "Listen 0.0.0.0:80" >> /etc/apache2/apache2.conf
+RUN echo "Listen 0.0.0.0:80" >> /etc/apache2/apache2.conf
 
 # Optionally, you can set environment variables here if needed
 # ENV VARIABLE_NAME=value
 ENV DB_USERNAME=root
 ENV DB_PASSWORD=root
-# Expose port 80 to allow incoming connections to the container
 
+# Expose port 80 to allow incoming connections to the container
 EXPOSE 80
 
-# By default, Apache is started automatically. You can change or customize the startup command if necessary.
-# CMD ["apache2-foreground"]
-
-
-
-
-
+# Set the entrypoint script
+ENTRYPOINT ["docker-entrypoint.sh"]
