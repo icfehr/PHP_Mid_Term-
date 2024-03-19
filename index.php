@@ -9,7 +9,14 @@ if ($method === 'OPTIONS') {
     header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
     exit();
 }
-  ?>
+
+echo '<pre>';
+print_r(getenv('SITE_URL'));
+echo '<br>';
+print_r($_SERVER);
+echo '</pre>';
+
+?>
   
 <html>
   <head>
@@ -17,6 +24,9 @@ if ($method === 'OPTIONS') {
   </head>
   <body>
     <?php echo '<p>Hello World</p>'; ?> 
+    <?php phpinfo(); ?> 
+
+    
 
   <!--
   This script places a badge on your repl's full-browser view back to your repl's cover
