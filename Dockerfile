@@ -4,6 +4,7 @@ FROM php:8.2-apache
 # Install required system packages and dependencies
 RUN apt-get update && apt-get install -y \
     libpq-dev \
+    mysql-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory in the container
