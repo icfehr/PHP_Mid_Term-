@@ -1,6 +1,8 @@
 # Use an official PHP runtime as a parent image
 FROM php:8.2-apache
 
+
+
 # Install required system packages and dependencies
 RUN apt-get update && apt-get install -y \
     libpq-dev \
@@ -17,6 +19,8 @@ COPY . /var/www/html
 # RUN apt-get update && apt-get install -y \
 #     git \
 #     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+#Does the database count as a depentancy????
 
 # If you have specific PHP extensions required, you can install them here.
 # For example, if you need MySQL support:
@@ -43,3 +47,8 @@ EXPOSE 80
 
 # By default, Apache is started automatically. You can change or customize the startup command if necessary.
 # CMD ["apache2-foreground"]
+
+
+
+
+
