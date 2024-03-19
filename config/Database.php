@@ -1,15 +1,17 @@
 <?php
 // File: config.php
+
 class Database {
     private $host = "127.0.0.1";
     private $database_name = "quotesdb";
     private $username;
     private $password;
 
-    public function __construct(){
-        $this->username = $_ENV['Username'];
-        $this->password = $_ENV['password'];
-    }
+    #Mess with later
+    #public function __construct(){
+    #    $this->username = $_ENV['Username'];
+    #    $this->password = $_ENV['password'];
+    #}
     
     public $conn;
 

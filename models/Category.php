@@ -20,11 +20,11 @@
         FROM
             ' . $this->table . ' p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.id DESC ';
             
-    // Prepared
-    $stmt =$this->conn-> prepare($query);
-    // EXECUTE
-    $stmt ->execute();
-    return $stmt;
+        // Prepared
+        $stmt =$this->conn-> prepare($query);
+        // EXECUTE
+        $stmt ->execute();
+        return $stmt;
     }
 
     public function create(){
