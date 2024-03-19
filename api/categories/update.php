@@ -11,14 +11,14 @@ include_once '../../models/Author.php';
 
 //Post
 
-$post = new Author($db);
+$post = new Category($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
 if (!empty($data->id)) {
     $post->id = $data->id;
-    $post->read_single();
     $post->category = $data->category;
+    $post->read_single();
     if ($post->update()) {
         echo json_encode(array('message' => 'Category updated successfully'));
     } else {

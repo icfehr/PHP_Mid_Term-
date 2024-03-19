@@ -14,8 +14,11 @@
 
     //get posts
     public function read(){
-        $query = ' SELECT c.name as category_name,
-        p.id FROM ' . $this->table . ' p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.id DESC ';
+        $query = ' SELECT
+        c.name as category_name,
+        p.id
+        FROM
+            ' . $this->table . ' p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.id DESC ';
             
     // Prepared
     $stmt =$this->conn-> prepare($query);

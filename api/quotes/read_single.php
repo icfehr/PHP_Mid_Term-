@@ -1,27 +1,21 @@
 <?php
 
 include_once '../../config/Database.php';
-include_once '../../models/Author.php';
-
-///INST DB and CONN
+include_once '../../models/Quote.php';
 
 $database = new Database();
 $db = $database->connect();
 
-//POST
+$quote = new Quote($db);
 
-$post = new Author($db);
+$quote->id = isset($_GET['id']) ? $_GET['id'] : die();
+$quote->read_single();
 
-$post -> id = isset($_GET['id']) ? $_GET['id'] : die();
-$post -> read_single();
-
-$quote_arr = array(
-    'id' => $post->id,
-    'quote' => $post->quote,
-    'author_id' => $post->author_id,
-    'category_id' => $post->category_id
+$post_item = array(
+    "id" => $quote->id,
+    "quote" => $quote->quote, 
+    "author_id" => $quote->author_id,
+    "category_id" => $quote->category_id
 );
 
-
-//make json
-print_r(json_encode($post_arr));
+print_r(json_encode($post_item));

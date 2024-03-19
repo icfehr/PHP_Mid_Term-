@@ -13,10 +13,9 @@ include_once '../../models/Author.php';
 
 $post = new Author($db);
 
-$data = json_decode(file_get_contents("php://input"))
+$data = json_decode(file_get_contents("php://input"));
 
 $post->id = $data->id;
-$post->category_name = $data->category_name;
 $post->author = $data->author;
 
 //CREATE

@@ -44,16 +44,15 @@ class Quote{
     }
 
     public function read_single(){
-        $query = ' SELECT * FROM quotes WHERE id = ? LIMIT 0,1 ';
+        $query = ' SELECT * FROM ' . $this->table . ' WHERE id = ? LIMIT 0,1 ';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $this->id);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        extract($row);
-        $this->id = $id;
-        $this->quote = $quote;
-        $this->author_id = $author_id;
-        $this->category_id = $category_id;
+        $this->id = $row['id'];
+        $this->quote = $row['quote'];
+        $this->author_id = $row['author_id'];
+        $this->category_id = $row['category_id'];
     }
 
     public function update(){

@@ -1,20 +1,23 @@
 <?php
 header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json')
-header( 'Access-Control-Allow-Methods: POST')
-header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow')
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow');
 
 //API
 include_once '../../config/Database.php';
-//Post
+include_once '../../models/Author.php';
 
+// Instantiate DB & connection
+$database = new Database();
+$db = $database->connect();
+
+// Instantiate Author object
 $post = new Author($db);
 
-$data = json_decode(file_get_contents("php://input"))
+$data = json_decode(file_get_contents("php://input"));
 
-$post->id = $data->id;
-$post->category_name = $data->category_name;
-$post->author_name = $data->author;
+$post->author = $data->author;
 
 //CREATE
 
@@ -27,4 +30,3 @@ if($post->create()){
         array('message' => 'Author Failed to Create')
     );
 }
-

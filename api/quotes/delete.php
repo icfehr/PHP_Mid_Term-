@@ -1,28 +1,35 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: DELETE');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow');
+
+// Include Database and Quote classes
 include_once '../../config/Database.php';
-include_once '../../models/Author.php';
+include_once '../../models/Quote.php';
 
-///INST DB and CONN
-
+// Instantiate Database and connect
 $database = new Database();
 $db = $database->connect();
 
-//POST
+// Instantiate Quote class
+$post = new Quote($db);
 
-$post = new quotes($db);
+// Get raw posted data
+$data = json_decode(file_get_contents("php://input"));
 
-$post -> id = isset($_GET['id']) ? $_GET['id'] : die();
-$post -> read_single();
+$post->id = $data->id;
 
-$post_arr = arrray(
-    'id' => $post->id,
-    'title' => $post->title,
-    'body' => $post->body,
-    'author' => $post->author,
-    'category_id' => $post->category_id,
-    'category_name' => $post->category_name
-)
-
-//make json
-print_r(json_encode($post_arr));
+// Delete quote
+if($post->delete()){
+    http_response_code(200);
+    echo json_encode(
+        array('message' => 'Quote Deleted')
+    );
+}else{
+    http_response_code(400);
+    echo json_encode(
+        array('message' => 'Quote Failed to Delete')
+    );
+}

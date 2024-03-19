@@ -1,7 +1,8 @@
 <?php
+
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-header( 'Access-Control-Allow-Methods: PUT');
+header('Access-Control-Allow-Methods: PUT');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow');
 
 include_once '../../config/Database.php';
@@ -24,10 +25,13 @@ if (!empty($data->id)) {
     $quote->category_id = $data->category_id;
 
     if ($quote->update()) {
+        http_response_code(200);
         echo json_encode(array('message' => 'Quote updated successfully'));
     } else {
+        http_response_code(400);
         echo json_encode(array('message' => 'Quote update failed'));
     }
 } else {
+    http_response_code(400);
     echo json_encode(array('message' => 'Invalid Quote ID'));
 }

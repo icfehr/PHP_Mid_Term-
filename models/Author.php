@@ -1,52 +1,52 @@
 <?php
 // File: config.php
-    class Author {
-        private $conn;
-        private $table = "Author";
-    //prop
-    public  $id;
-    public $author_name;
+class Author {
+    private $conn;
+    private $table = "Author";
+    // Properties
+    public $id;
+    public $author;
+
     public function __construct($db){
         $this->conn = $db;
     }
 
-    //get posts
+    // Get authors
     public function read(){
-         $query = 'SELECT * FROM ' . $this->table;
-        // Prepared
-        $stmt =$this->conn-> prepare($query);
-        // EXECUTE
-        $stmt ->execute();
+        $query = 'SELECT * FROM ' . $this->table;
+        // Prepared statement
+        $stmt = $this->conn->prepare($query);
+        // Execute
+        $stmt->execute();
         return $stmt;
     }
     
     public function create(){
-        $query = ' INSERT INTO ' . $this->table . 'SET author=:author, id=:id';
+        $query = 'INSERT INTO ' . $this->table . ' SET author=:author';
         $stmt = $this->conn->prepare($query);
         $this->author = htmlspecialchars(strip_tags($this->author));
         $stmt->bindParam(':author', $this->author);
         if($stmt->execute()){
             return true;
         }
-        printf("Error: %s.\n", $stmt->error);
+        printf("Error: %s.\n", $stmt->errorInfo()[2]);
         return false;
     }
     
     // Single Read Function
     public function read_single(){
-        $query = 'SELECT * FROM authors WHERE id = ? LIMIT 0,1';
+        $query = 'SELECT * FROM ' . $this->table . ' WHERE id = ? LIMIT 0,1';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $this->id);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        extract($row);
-        $this->id = $id;
-        $this->author = $author;
+        $this->id = $row['id'];
+        $this->author = $row['author'];
     } 
     
     // Update Function
     public function update(){
-        $query = ' UPDATE ' . $this->table . ' SET author=:author WHERE id = :id ';
+        $query = 'UPDATE ' . $this->table . ' SET author=:author WHERE id = :id';
         $stmt = $this->conn->prepare($query);
         $this->author = htmlspecialchars(strip_tags($this->author));
         $this->id = htmlspecialchars(strip_tags($this->id));
@@ -55,11 +55,11 @@
         if($stmt->execute()){
             return true;
         }
-        printf("Error: %s.\n", $stmt->error);
+        printf("Error: %s.\n", $stmt->errorInfo()[2]);
         return false;
     }
 
-      //Delete Function
+    // Delete Function
     public function delete(){
         $query = 'DELETE FROM ' . $this->table . ' WHERE id = :id';  
         $stmt = $this->conn->prepare($query);
@@ -68,7 +68,7 @@
         if($stmt->execute()){
             return true;
         }
-        printf("Error: %s.\n", $stmt->error);
+        printf("Error: %s.\n", $stmt->errorInfo()[2]);
         return false;
     }
 }

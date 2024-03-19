@@ -1,31 +1,29 @@
 <?php
 
-
 header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json')
-header( 'Access-Control-Allow-Methods: DELETE')
-header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow')
-
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: DELETE');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow');
 
 //API
 include_once '../../config/Database.php';
+include_once '../../models/Category.php';
 
-//Post
-$post = new category($db);
+// Instantiate Category object
+$post = new Category($db);
 
-//Raw Data
-$data = json_decode(file_get_contents("php://input"))
+// Get raw posted data
+$data = json_decode(file_get_contents("php://input"));
 
 $post->id = $data->id;
-//Delete Function
 
+// Delete function
 if($post->delete()){
     echo json_encode(
-        array('message' => 'Author Delete')
+        array('message' => 'Category Deleted')
     );
 }else{
     echo json_encode(
-        array('message' => 'Author Failed to Delete')
+        array('message' => 'Category Failed to Delete')
     );
 }
-

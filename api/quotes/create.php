@@ -1,26 +1,29 @@
 <?php
 
-
 header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json')
-header( 'Access-Control-Allow-Methods: POST')
-header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow')
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow');
 
-
-//API
+// Include Database and Quote classes
 include_once '../../config/Database.php';
-//Post
+include_once '../../models/Quote.php';
 
-$post = new quotes($db);
+// Instantiate Database and connect
+$database = new Database();
+$db = $database->connect();
 
-$data = json_decode(file_get_contents("php://input"))
+// Instantiate Quote class
+$post = new Quote($db);
+
+$data = json_decode(file_get_contents("php://input"));
 
 $post->id = $data->id;
-$post->category_name = $data->category_name;
-$post->author_name = $data->author;
+$post->quote = $data->quote;
+$post->category_id = $data->category_id;
+$post->author_id = $data->author_id;
 
-//CREATE
-
+// Create quote
 if($post->create()){
     echo json_encode(
         array('message' => 'Author Created')
@@ -30,4 +33,3 @@ if($post->create()){
         array('message' => 'Author Failed to Create')
     );
 }
-

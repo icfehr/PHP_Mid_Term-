@@ -3,26 +3,24 @@
 include_once '../../config/Database.php';
 include_once '../../models/Author.php';
 
-///INST DB and CONN
-
+// Instantiate DB & connect
 $database = new Database();
 $db = $database->connect();
 
-//POST
+// Instantiate Author object
+$authorObj = new Author($db);
 
-$post = new Author($db);
+// Get ID from URL
+$authorObj->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-$post -> id = isset($_GET['id']) ? $_GET['id'] : die();
-$post -> read_single();
+// Get single author
+$authorObj->read_single();
 
-$post_arr = array(
-    'id' => $post->id,
-    'title' => $post->title,
-    'body' => $post->body,
-    'author' => $post->author,
-    'category_id' => $post->category_id,
-    "category_name" => $post->category_name
-)
+// Create array
+$author_item = array(
+    "id" => $authorObj->id,
+    "author" => $authorObj->author
+);
 
-//make json
-print_r(json_encode($post_arr));
+// Make JSON
+print_r(json_encode($author_item));

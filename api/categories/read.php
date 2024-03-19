@@ -24,7 +24,6 @@ if ($num > 0) {
         $post_item = array(
             "id" => $id,
             "category_name" => $category_name,
-            "category_id" => $category_id
         );
 
         array_push($posts_arr['data'], $post_item);

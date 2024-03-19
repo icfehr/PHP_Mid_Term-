@@ -10,10 +10,12 @@ if ($method === 'OPTIONS') {
     exit();
 }
 echo '<p>Hello World</p>';
+
 echo '<pre>';
 print_r(getenv('SITE_URL'));
 echo '<br>';
 print_r($_SERVER);
 echo '</pre>';
+
 phpinfo();
 ?>

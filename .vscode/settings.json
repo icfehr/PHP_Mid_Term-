@@ -13,5 +13,11 @@
         "latex",
         "plaintext",
         "php"
+    ],
+    "cSpell.ignoreWords": [
+        "php"
+    ],
+    "cSpell.words": [
+        "php"
     ]
 }

@@ -1,25 +1,22 @@
 <?php
 
 include_once '../../config/Database.php';
-include_once '../../models/Author.php';
+include_once '../../models/Category.php';
 
-///INST DB and CONN
-
+// Instantiate DB & connection
 $database = new Database();
 $db = $database->connect();
 
-//POST
+// Instantiate Category object
+$post = new Category($db);
 
-$post = new Author($db);
-
-$post -> id = isset($_GET['id']) ? $_GET['id'] : die();
-$post -> read_single();
+$post->id = isset($_GET['id']) ? $_GET['id'] : die();
+$post->read_single();
 
 $category_arr = array(
-    'id' => $category->id,
-    'category' => $category->category
+    'id' => $post->id,
+    'category' => $post->category
 );
 
-
-//make json
-print_r(json_encode($post_arr));
+// Make JSON
+print_r(json_encode($category_arr));
