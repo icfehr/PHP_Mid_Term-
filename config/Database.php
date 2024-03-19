@@ -2,7 +2,7 @@
 // File: config.php
 
 class Database {
-    private $host = "127.0.0.1";
+    private $host = "db";
     private $database_name = "quotesdb";
     private $username;
     private $password;

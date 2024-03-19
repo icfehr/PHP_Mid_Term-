@@ -16,3 +16,5 @@ Replit auto complete is nice but really inaccurate for variables
 
 Databases are a pain, at this point im sure that im going to have to create a database from scratch.... so that will be a fun 5 hours
 
+Holy hell Deploying the database along side the docker image is a nightmare???
+Its been over 5 hours and literally 15 revisions of finding out im not even running an sql server to not having the server link up at all

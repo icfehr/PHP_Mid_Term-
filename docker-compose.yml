@@ -14,5 +14,5 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: quotesdb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
