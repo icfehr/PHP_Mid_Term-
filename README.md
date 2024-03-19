@@ -18,3 +18,7 @@ Databases are a pain, at this point im sure that im going to have to create a da
 
 Holy hell Deploying the database along side the docker image is a nightmare???
 Its been over 5 hours and literally 15 revisions of finding out im not even running an sql server to not having the server link up at all
+Its not good practice to be able to see the env variables but at this point I literally could care less, I really just need the bloody thing to work. Ive been at this for a week and it took me 10 hours to properly build the api-- when XAMPP was WORKING and 3 for a basic database............
+Seriously though XAMPP is the actual worst, it just breaks half the time because of the nature of windows breaking ports... 
+
+
