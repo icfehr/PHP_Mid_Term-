@@ -24,7 +24,7 @@ COPY . /var/www/html
 
 # If you have specific PHP extensions required, you can install them here.
 # For example, if you need MySQL support:
-# RUN docker-php-ext-install pdo_mysql 
+RUN docker-php-ext-install pdo_mysql 
 
 # Adding Postgres support:
 RUN docker-php-ext-install pdo_pgsql
@@ -41,8 +41,10 @@ RUN a2enmod rewrite
 
 # Optionally, you can set environment variables here if needed
 # ENV VARIABLE_NAME=value
-
+ENV DB_USERNAME=root
+ENV DB_PASSWORD=root
 # Expose port 80 to allow incoming connections to the container
+
 EXPOSE 80
 
 # By default, Apache is started automatically. You can change or customize the startup command if necessary.

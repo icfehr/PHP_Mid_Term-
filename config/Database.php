@@ -7,11 +7,11 @@ class Database {
     private $username;
     private $password;
 
-    #Mess with later
-    #public function __construct(){
-    #    $this->username = $_ENV['Username'];
-    #    $this->password = $_ENV['password'];
-    #}
+    public function __construct(){
+        $this->username = $_ENV['DB_USERNAME'];
+        $this->password = $_ENV['DB_PASSWORD'];
+    }
+    
     
     public $conn;
 
