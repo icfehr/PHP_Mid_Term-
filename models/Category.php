@@ -1,8 +1,8 @@
 <?php
 // File: config.php
-  class Category {
+class Category {
     private $conn;
-    private $table = "category";
+    private $table = "categories";
     //properties
     public  $id;
     public $category;
@@ -15,17 +15,17 @@
     //get posts
     public function read(){
         $query = ' SELECT
-        c.name as category_name,
-        p.id
+        c.category as category_name,
+        c.id
         FROM
-            ' . $this->table . ' p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.id DESC ';
+            ' . $this->table . ' c ORDER BY c.id DESC ';
             
         // Prepared
         $stmt =$this->conn-> prepare($query);
         // EXECUTE
         $stmt ->execute();
         return $stmt;
-    }
+    }    
 
     public function create(){
         $query = ' INSERT INTO ' . $this->table . ' SET category=:category, id=:id';

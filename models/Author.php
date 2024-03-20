@@ -2,7 +2,7 @@
 // File: config.php
 class Author {
     private $conn;
-    private $table = "Author";
+    private $table = "Authors";
     // Properties
     public $id;
     public $author;

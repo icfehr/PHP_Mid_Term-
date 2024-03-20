@@ -22,3 +22,6 @@ Its not good practice to be able to see the env variables but at this point I li
 Seriously though XAMPP is the actual worst, it just breaks half the time because of the nature of windows breaking ports... 
 
 Abandoning the all in one idea, I have copped out to get the render sql easy deploy. 
+
+turning to the local host I fixed xampp, again... im now just rushing to get all the functions working locally... If I have to redo the database when it goes online somehow so be it. 
+Turns out I had another version of the project in the htapps looking folder and xampp was using that project instead of the one I was actively changing, there goes 6+ hours of work and troubleshooting to something stupid... 

@@ -1,4 +1,5 @@
 <?php
+
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
@@ -14,7 +15,6 @@ if ($method === 'OPTIONS') {
     header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
     exit();
 }
-// Basic control logic API requests
 
 $database = new Database();
 $db = $database->connect();
@@ -23,15 +23,15 @@ $quote = new Quote($db);
 $author = new Author($db);
 $category = new Category($db);
 
-$result = $quote->read();
-
-$num = $result->rowCount();
+$data = $quote->read();
+$num = $data['rowCount'];
+$result = $data['result'];
 
 if ($num > 0) {
     $quotes_arr = array();
     $quotes_arr['data'] = array();
 
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+    foreach ($result as $row) {
         extract($row);
 
         $author->id = $author_id;

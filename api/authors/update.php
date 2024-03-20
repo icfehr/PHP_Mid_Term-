@@ -1,32 +1,35 @@
 <?php
+
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-header( 'Access-Control-Allow-Methods: PUT');
+header('Access-Control-Allow-Methods: PUT');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow');
 
-
-//API
 include_once '../../config/Database.php';
 include_once '../../models/Author.php';
 
-//Post
+$database = new Database();
+$db = $database->connect();
 
-$post = new Author($db);
+$author = new Author($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
-$post->id = $data->id;
-$post->author = $data->author;
+if (!empty($data->id) && !empty($data->author)) {
+    $author->id = $data->id;
+    $author->author = $data->author;
 
-//CREATE
-
-if ($post->update()) {
-    echo json_encode(
-        array('message' => 'Author Updated')
-    );
+    if ($author->update()) {
+        echo json_encode(
+            array('message' => 'Author Updated')
+        );
+    } else {
+        echo json_encode(
+            array('message' => 'Author Failed to Update')
+        );
+    }
 } else {
     echo json_encode(
-        array('message' => 'Author Failed to Updated')
+        array('message' => 'Invalid or missing data')
     );
 }
-

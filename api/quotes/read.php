@@ -11,15 +11,15 @@ $db = $database->connect();
 
 $quote = new Quote($db);
 
-$result = $quote->read();
-
-$num = $result->rowCount();
+$data = $quote->read();
+$num = $data['rowCount'];
+$result = $data['result'];
 
 if ($num > 0) {
     $posts_arr = array();
     $posts_arr['data'] = array();
 
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+    foreach ($result as $row) {
         extract($row);
 
         $post_item = array(

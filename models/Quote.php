@@ -2,7 +2,7 @@
 // File: config.php
 class Quote{
     private $conn;
-    private $table = "Quote";
+    private $table = "quotes";
 
     //properties
     public  $id;
@@ -17,14 +17,14 @@ class Quote{
 
     //get posts
     public function read(){
-        $query = ' SELECT * FROM quotes ';
-            
-    // Prepared
-        $stmt =$this->conn->prepare($query);
-    // EXECUTE
-        $stmt ->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $query = 'SELECT * FROM quotes';
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $rowCount = $stmt->rowCount();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return array('rowCount' => $rowCount, 'result' => $result);
     }
+    
 
 
     public function create(){

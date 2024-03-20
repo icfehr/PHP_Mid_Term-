@@ -1,12 +1,18 @@
 <?php
 // File: config.php
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 class Database {
-    private $host = "db";
+    private $host = "localhost";
     private $database_name = "quotesdb";
     private $username;
     private $password;
-
+    
     public function __construct(){
         $this->username = $_ENV['DB_USERNAME'];
         $this->password = $_ENV['DB_PASSWORD'];
