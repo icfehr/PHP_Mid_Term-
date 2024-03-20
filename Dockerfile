@@ -14,7 +14,7 @@ COPY . /var/www/html
 
 # If you have specific PHP extensions required, you can install them here.
 # For example, if you need MySQL support:
-RUN docker-php-ext-install pdo_pgsql 
+RUN docker-php-ext-install pdo_mysql 
 
 # Copy custom Apache configuration
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
