@@ -27,8 +27,7 @@ RUN echo "Listen 0.0.0.0:80" >> /etc/apache2/apache2.conf
 
 # Optionally, you can set environment variables here if needed
 # ENV VARIABLE_NAME=value
-ENV DB_USERNAME=root
-ENV DB_PASSWORD=root
+
 # Expose port 80 to allow incoming connections to the container
 
 EXPOSE 80
