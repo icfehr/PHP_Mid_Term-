@@ -9,12 +9,3 @@ services:
       - "80:80"
     volumes:
       - .:/var/www/html
-  db:
-    image: mysql:8
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: quotesdb
-      MYSQL_USER: ${DB_USERNAME}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
