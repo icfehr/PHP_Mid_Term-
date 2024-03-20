@@ -8,11 +8,12 @@ class Database {
     private $password;
     
     public function __construct(){
-        $this->host = $_ENV['DB_HOST'];
-        $this->database_name = $_ENV['MYSQL_DATABASE'];
-        $this->username = $_ENV['MYSQL_USER'];
-        $this->password = $_ENV['MYSQL_PASSWORD'];
+        $this->host = getenv('DB_HOST');
+        $this->database_name = getenv('MYSQL_DATABASE');
+        $this->username = getenv('MYSQL_USER');
+        $this->password = getenv('MYSQL_PASSWORD');
     }
+    
     
     
     public $conn;
