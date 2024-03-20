@@ -2,29 +2,26 @@
 // File: config.php
 
 class Database {
-    private $host;
-    private $database_name;
+    private $servername;
+    private $port;
+    private $dbname;
     private $username;
     private $password;
-
-    
-    public function __construct(){
-        $this->host = getenv('DB_HOST');
-        $this->database_name = getenv('Database');
-        $this->username = getenv('DB_USERNAME');
-        $this->password = getenv('DB__PASSWORD');
-    }
-    
-    
-    
     public $conn;
 
+    public function __construct(){
+        $this->servername = getenv('DB_HOST');
+        $this->port = getenv('DB_PORT');
+        $this->dbname = getenv('DB_DATABASE');
+        $this->username = getenv('DB_USERNAME');
+        $this->password = getenv('DB_PASSWORD');
+    }
+
     public function connect(){
-        $this-> conn = null;
+        $this->conn = null;
 
         try {
-            $this -> conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->database_name, $this->username, $this->password);
-
+            $this->conn = new PDO("mysql:host=" . $this->servername . ";port=" . $this->port . ";dbname=" . $this->dbname, $this->username, $this->password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $sql_quotes = "CREATE TABLE IF NOT EXISTS quotes (
@@ -46,20 +43,17 @@ class Database {
                 category VARCHAR(256) NOT NULL
             )";
         
-        $this->conn->exec($sql_quotes);
-        $this->conn->exec($sql_authors);
-        $this->conn->exec($sql_categories);
+            $this->conn->exec($sql_quotes);
+            $this->conn->exec($sql_authors);
+            $this->conn->exec($sql_categories);
     
-        echo "Tables created";
+            echo "Tables created";
 
-
-        }catch(PDOException $e){
+        } catch(PDOException $e) {
             echo "Connection Error: " . $e->getMessage();
         }
     
         return $this->conn;
     }
 }
-
-
-
+?>
