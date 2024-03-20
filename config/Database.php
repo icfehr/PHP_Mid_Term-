@@ -8,14 +8,16 @@ $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 class Database {
-    private $host = "localhost";
-    private $database_name = "quotesdb";
+    private $host;
+    private $database_name;
     private $username;
     private $password;
     
     public function __construct(){
-        $this->username = $_ENV['DB_USERNAME'];
-        $this->password = $_ENV['DB_PASSWORD'];
+        $this->host = $_ENV['DB_HOST'];
+        $this->database_name = $_ENV['MYSQL_DATABASE'];
+        $this->username = $_ENV['MYSQL_USER'];
+        $this->password = $_ENV['MYSQL_PASSWORD'];
     }
     
     
