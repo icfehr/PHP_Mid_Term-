@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 $method = $_SERVER['REQUEST_METHOD'];
@@ -10,7 +11,6 @@ if ($method === 'OPTIONS') {
 }
 echo '<p>Hello World</p>';
 
-declare(strict_types = 1);
 
 echo '<pre>';
 print_r(getenv('SITE_URL'));
