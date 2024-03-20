@@ -6,12 +6,13 @@ class Database {
     private $database_name;
     private $username;
     private $password;
+
     
     public function __construct(){
         $this->host = getenv('DB_HOST');
-        $this->database_name = getenv('MYSQL_DATABASE');
-        $this->username = getenv('MYSQL_USER');
-        $this->password = getenv('MYSQL_PASSWORD');
+        $this->database_name = getenv('Database');
+        $this->username = getenv('DB_USERNAME');
+        $this->password = getenv('DB__PASSWORD');
     }
     
     
