@@ -106,13 +106,10 @@ if (isset($_GET['id'])) {
                 // Handle the case where $row is not an array
                 continue;
             }
-        
             $author->id = $author_id ?? null; // Use null coalescing operator to handle undefined variable
             $author->read_single();
-        
             $category->id = $category_id ?? null; // Use null coalescing operator to handle undefined variable
             $category->read_single();
-        
             $quote_item = array(
                 "id" => $id,
                 "quote" => $quote,
@@ -122,10 +119,12 @@ if (isset($_GET['id'])) {
         
             array_push($quotes_arr['data'], $quote_item);
         }
+        echo json_encode($quotes_arr);
     }
     else {
         http_response_code(404);
         echo json_encode(array('message' => 'No Quotes Found'));
     }
-
 }
+
+echo json_encode(array('message' => 'Quotes API endpoint'));
