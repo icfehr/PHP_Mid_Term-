@@ -90,7 +90,7 @@ if (isset($_GET['id'])) {
         $quotes_arr = array();
         $quotes_arr['data'] = array();
 
-        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        foreach ($result as $row) {
             extract($row);
 
             $author->id = $author_id;
@@ -116,6 +116,5 @@ if (isset($_GET['id'])) {
         );
     }
 }
-
 
 echo json_encode(array('message' => 'Quotes API endpoint'));
