@@ -45,9 +45,11 @@ class Category {
         $stmt->bindParam(1, $this->id);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        extract($row);
-        $this->id = $id;
-        $this->category = $category;
+        if ($row) {
+            extract($row);
+            $this->id = $id;
+            $this->category = $category;
+        }
     }
 
     public function update(){
