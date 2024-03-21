@@ -49,6 +49,9 @@ class Category {
             extract($row);
             $this->id = $id;
             $this->category = $category;
+        } else {
+            $this->id = null;
+            $this->category = null;
         }
     }
 
