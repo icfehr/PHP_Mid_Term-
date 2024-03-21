@@ -45,6 +45,7 @@ if (isset($_GET['id'])) {
 
         echo json_encode($quote_arr);
     } else {
+        http_response_code(404);
         echo json_encode(array("message" => "Quote not found."));
     }
 } elseif (isset($_GET['author_id'])) {
@@ -58,18 +59,18 @@ if (isset($_GET['id'])) {
         $quotes_arr['data'] = array();
 
         foreach ($result as $row) {
-            // Check if the row is an array before calling extract()
-            if (is_array($row)) {
+            // Check if the row is an array and contains the required keys before calling extract()
+            if (is_array($row) && isset($row['id']) && isset($row['author_id']) && isset($row['category_id'])) {
                 extract($row);
             } else {
-                // Handle the case where $row is not an array
+                // Handle the case where $row is not an array or does not contain the required keys
                 continue;
             }
         
-            $author->id = $author_id ?? null;
+            $author->id = $author_id;
             $author->read_single();
         
-            $category->id = $category_id ?? null; 
+            $category->id = $category_id;
             $category->read_single();
         
             $quote_item = array(
@@ -84,7 +85,8 @@ if (isset($_GET['id'])) {
 
         echo json_encode($quotes_arr);
     } else {
-        echo json_encode(array("message" => "No Quotes Found for the given author."));
+        http_response_code(404);
+        echo json_encode(array("message" => "No Quotes Found for the author."));
     }
 } else {
     // Get all quotes
@@ -97,18 +99,18 @@ if (isset($_GET['id'])) {
         $quotes_arr['data'] = array();
 
         foreach ($result as $row) {
-            // Check if the row is an array before calling extract()
-            if (is_array($row)) {
+            // Check if the row is an array and contains the required keys before calling extract()
+            if (is_array($row) && isset($row['id']) && isset($row['author_id']) && isset($row['category_id'])) {
                 extract($row);
             } else {
-                // Handle the case where $row is not an array
+                // Handle the case where $row is not an array or does not contain the required keys
                 continue;
             }
         
-            $author->id = $author_id ?? null;
+            $author->id = $author_id;
             $author->read_single();
         
-            $category->id = $category_id ?? null;
+            $category->id = $category_id;
             $category->read_single();
         
             $quote_item = array(
@@ -123,10 +125,8 @@ if (isset($_GET['id'])) {
 
         echo json_encode($quotes_arr);
     } else {
-        echo json_encode(
-            array('message' => 'No Quotes Found')
-        );
+        http_response_code(404);
+        echo json_encode(array('message' => 'No Quotes Found'));
     }
-}
 
-echo json_encode(array('message' => 'Quotes API endpoint'));
+}
