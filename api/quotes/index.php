@@ -23,38 +23,96 @@ $quote = new Quote($db);
 $author = new Author($db);
 $category = new Category($db);
 
-$data = $quote->read();
-$num = $data['rowCount'];
-$result = $data['result'];
+if (isset($_GET['id'])) {
+    // Get a single quote
+    $quote->id = $_GET['id'];
+    $quote->read_single();
 
-if ($num > 0) {
-    $quotes_arr = array();
-    $quotes_arr['data'] = array();
-
-    foreach ($result as $row) {
-        extract($row);
-
-        $author->id = $author_id;
+    if ($quote->quote != null) {
+        $author->id = $quote->author_id;
         $author->read_single();
 
-        $category->id = $category_id;
+        $category->id = $quote->category_id;
         $category->read_single();
 
-        $quote_item = array(
-            "id" => $id,
-            "quote" => $quote, 
+        $quote_arr = array(
+            "id" => $quote->id,
+            "quote" => $quote->quote,
             "author" => $author->author,
             "category" => $category->category
         );
 
-        array_push($quotes_arr['data'], $quote_item);
+        echo json_encode($quote_arr);
+    } else {
+        echo json_encode(array("message" => "Quote not found."));
     }
+} elseif (isset($_GET['author_id'])) {
+    // Get all quotes from a specific author
+    $quotes = $quote->read_by_author_id($_GET['author_id']);
 
-    echo json_encode($quotes_arr);
-} else {
-    echo json_encode(
-        array('message' => 'No Quotes Found')
-    );
+    if ($quotes['rowCount'] > 0) {
+        $quotes_arr = array();
+        $quotes_arr['data'] = array();
+
+        foreach ($quotes['result'] as $row) {
+            extract($row);
+
+            $author->id = $author_id;
+            $author->read_single();
+
+            $category->id = $category_id;
+            $category->read_single();
+
+            $quote_item = array(
+                "id" => $id,
+                "quote" => $quote,
+                "author" => $author->author,
+                "category" => $category->category
+            );
+
+            array_push($quotes_arr['data'], $quote_item);
+        }
+
+        echo json_encode($quotes_arr);
+    } else {
+        echo json_encode(array("message" => "No Quotes Found for the given author."));
+    }
+}else {
+    // Get all quotes
+    $result = $quote->read();
+
+    $num = $result->rowCount();
+
+    if ($num > 0) {
+        $quotes_arr = array();
+        $quotes_arr['data'] = array();
+
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+
+            $author->id = $author_id;
+            $author->read_single();
+
+            $category->id = $category_id;
+            $category->read_single();
+
+            $quote_item = array(
+                "id" => $id,
+                "quote" => $quote, 
+                "author" => $author->author,
+                "category" => $category->category
+            );
+
+            array_push($quotes_arr['data'], $quote_item);
+        }
+
+        echo json_encode($quotes_arr);
+    } else {
+        echo json_encode(
+            array('message' => 'No Quotes Found')
+        );
+    }
 }
+
 
 echo json_encode(array('message' => 'Quotes API endpoint'));

@@ -55,6 +55,16 @@ class Quote{
         $this->category_id = $row['category_id'];
     }
 
+    public function read_by_author_id($author_id){
+        $query = 'SELECT * FROM ' . $this->table . ' WHERE author_id = ?';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $author_id);
+        $stmt->execute();
+        $rowCount = $stmt->rowCount();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return array('rowCount' => $rowCount, 'result' => $result);
+    }
+    
     public function update(){
         $query = ' UPDATE quotes SET quote=:quote, author_id=:author_id, category_id=:category_id WHERE id = :id ';
         $stmt = $this->conn->prepare($query);
