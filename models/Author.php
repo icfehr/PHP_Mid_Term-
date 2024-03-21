@@ -40,7 +40,7 @@ class Author {
         $stmt->bindParam(1, $this->id);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($row) {
+        if ($row && isset($row['id']) && isset($row['author'])) {
             $this->id = $row['id'];
             $this->author = $row['author'];
         } else {
