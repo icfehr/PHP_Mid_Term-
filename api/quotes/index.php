@@ -23,6 +23,7 @@ $quote = new Quote($db);
 $author = new Author($db);
 $category = new Category($db);
 
+
 if (isset($_GET['id'])) {
     // Get a single quote
     $quote->id = $_GET['id'];
@@ -48,13 +49,15 @@ if (isset($_GET['id'])) {
     }
 } elseif (isset($_GET['author_id'])) {
     // Get all quotes from a specific author
-    $quotes = $quote->read_by_author_id($_GET['author_id']);
+    $data = $quote->read_by_author_id($_GET['author_id']);
+    $num = $data['rowCount'];
+    $result = $data['result'];
 
-    if ($quotes['rowCount'] > 0) {
+    if ($num > 0) {
         $quotes_arr = array();
         $quotes_arr['data'] = array();
 
-        foreach ($quotes['result'] as $row) {
+        foreach ($result as $row) {
             extract($row);
 
             $author->id = $author_id;
@@ -77,11 +80,11 @@ if (isset($_GET['id'])) {
     } else {
         echo json_encode(array("message" => "No Quotes Found for the given author."));
     }
-}else {
+} else {
     // Get all quotes
-    $result = $quote->read();
-
-    $num = $result->rowCount();
+    $data = $quote->read();
+    $num = $data['rowCount'];
+    $result = $data['result'];
 
     if ($num > 0) {
         $quotes_arr = array();
