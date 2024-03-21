@@ -94,7 +94,7 @@ if (isset($_GET['id'])) {
     $num = $data['rowCount'];
     $result = $data['result'];
 
-    if ($num > 0) {
+    if ($num >= 25) {
         $quotes_arr = array();
         $quotes_arr['data'] = array();
 
@@ -123,7 +123,7 @@ if (isset($_GET['id'])) {
     }
     else {
         http_response_code(404);
-        echo json_encode(array('message' => 'No Quotes Found'));
+        echo json_encode(array('message' => 'Not enough quotes found'));
     }
 }
 
