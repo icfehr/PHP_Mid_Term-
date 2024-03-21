@@ -58,21 +58,27 @@ if (isset($_GET['id'])) {
         $quotes_arr['data'] = array();
 
         foreach ($result as $row) {
-            extract($row);
-
-            $author->id = $author_id;
+            // Check if the row is an array before calling extract()
+            if (is_array($row)) {
+                extract($row);
+            } else {
+                // Handle the case where $row is not an array
+                continue;
+            }
+        
+            $author->id = $author_id ?? null;
             $author->read_single();
-
-            $category->id = $category_id;
+        
+            $category->id = $category_id ?? null; 
             $category->read_single();
-
+        
             $quote_item = array(
                 "id" => $id,
                 "quote" => $quote,
                 "author" => $author->author,
                 "category" => $category->category
             );
-
+        
             array_push($quotes_arr['data'], $quote_item);
         }
 
@@ -91,21 +97,27 @@ if (isset($_GET['id'])) {
         $quotes_arr['data'] = array();
 
         foreach ($result as $row) {
-            extract($row);
-
-            $author->id = $author_id;
+            // Check if the row is an array before calling extract()
+            if (is_array($row)) {
+                extract($row);
+            } else {
+                // Handle the case where $row is not an array
+                continue;
+            }
+        
+            $author->id = $author_id ?? null;
             $author->read_single();
-
-            $category->id = $category_id;
+        
+            $category->id = $category_id ?? null;
             $category->read_single();
-
+        
             $quote_item = array(
                 "id" => $id,
-                "quote" => $quote, 
+                "quote" => $quote,
                 "author" => $author->author,
                 "category" => $category->category
             );
-
+        
             array_push($quotes_arr['data'], $quote_item);
         }
 

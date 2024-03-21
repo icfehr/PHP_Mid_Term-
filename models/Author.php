@@ -40,9 +40,14 @@ class Author {
         $stmt->bindParam(1, $this->id);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $this->id = $row['id'];
-        $this->author = $row['author'];
-    } 
+        if ($row) {
+            $this->id = $row['id'];
+            $this->author = $row['author'];
+        } else {
+            // Handle the case where no row was found
+        }
+    }
+    
     
     // Update Function
     public function update(){
