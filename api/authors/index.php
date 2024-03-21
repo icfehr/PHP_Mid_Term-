@@ -17,30 +17,23 @@ $db = $database->connect();
 // Instantiate Author object
 $authorObj = new Author($db);
 
-// Get all authors
-$result = $authorObj->read();
+// Get author_id from query parameters
+$authorObj->id = isset($_GET['author_id']) ? $_GET['author_id'] : die();
 
-$num = $result->rowCount();
+// Get the author
+$authorObj->read_single();
 
-if ($num > 0) {
-    $authors_arr = array();
-    $authors_arr['data'] = array();
-
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-        extract($row);
-
-        $author_item = array(
-            "id" => $id,
-            "author" => $author
-        );
-
-        array_push($authors_arr['data'], $author_item);
-    }
+if($authorObj->author != null){
+    // Create array
+    $author_arr = array(
+        "id" =>  $authorObj->id,
+        "author" => $authorObj->author
+    );
 
     // Make JSON
-    print_r(json_encode($authors_arr));
+    print_r(json_encode($author_arr));
 } else {
     echo json_encode(
-        array('message' => 'No Authors Found')
+        array("message" => "Author not found.")
     );
-};
+}
